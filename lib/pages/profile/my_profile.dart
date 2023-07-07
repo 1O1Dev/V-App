@@ -15,7 +15,7 @@ class _MyProfilePageState extends State<MyProfilePage>
 
   @override
   void initState() {
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     super.initState();
   }
 
@@ -83,12 +83,12 @@ class _MyProfilePageState extends State<MyProfilePage>
                   Padding(
                     padding: EdgeInsets.all(appDefaultPadding),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Column(
                           children: [
                             Text(
-                              "2000",
+                              "600",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,
@@ -176,12 +176,21 @@ class _MyProfilePageState extends State<MyProfilePage>
                   indicatorSize: TabBarIndicatorSize.label,
                   indicatorColor: appColor,
                   labelColor: appColor,
-                  indicator: const BoxDecoration(color: Colors.transparent),
+                  indicator: const BoxDecoration(
+                    color: Colors.transparent,
+                    border: Border(
+                      bottom: BorderSide(
+                        color: appColor,
+                        width: 2,
+                      ),
+                    ),
+                  ),
                   indicatorWeight: 5.0,
                   tabs: const [
                     Tab(text: 'Post'),
                     Tab(text: 'Replies'),
                     Tab(text: 'Like'),
+                    Tab(text: 'Share'),
                   ],
                 ),
               ),
@@ -191,6 +200,10 @@ class _MyProfilePageState extends State<MyProfilePage>
             controller: _tabController,
             physics: const BouncingScrollPhysics(),
             children: [
+              ListView.builder(
+                itemCount: 20,
+                itemBuilder: (context, index) => const PostCard(),
+              ),
               ListView.builder(
                 itemCount: 20,
                 itemBuilder: (context, index) => const PostCard(),
