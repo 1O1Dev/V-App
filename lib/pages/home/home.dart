@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v_app/configs/app_config.dart';
-import 'package:v_app/pages/home/explorer.dart';
-import 'package:v_app/pages/home/following.dart';
+import 'package:v_app/pages/page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,7 +14,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -39,6 +38,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               ),
               tabs: const [
                 Tab(text: 'Explorer'),
+                Tab(text: 'Near You'),
                 Tab(text: 'Following'),
               ],
             ),
@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         children: const [
           ExplorerPage(),
           FollowingPage(),
+          NearYourPage(),
         ],
       ),
     );

@@ -8,3 +8,4 @@ export 'notification/notification.dart';
 export 'like/like.dart';
 export 'profile/my_profile.dart';
 export 'profile/friend_profile.dart';
+export 'home/near.dart';
