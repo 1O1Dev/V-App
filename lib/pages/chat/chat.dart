@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:v_app/configs/config.dart';
+import '../../configs/config.dart';
 
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+class ChatPage extends StatefulWidget {
+  const ChatPage({super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<ChatPage> createState() => _ChatPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Search"),
+        title: const Text("Chat"),
         toolbarHeight: 45,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
@@ -40,7 +40,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   const SizedBox(width: appDefaultPadding / 2),
                   const Text(
-                    "Search someone here",
+                    "Search your friends here",
                     style: TextStyle(color: greyColor),
                   ),
                 ],
@@ -61,12 +61,12 @@ class _SearchPageState extends State<SearchPage> {
               horizontal: appDefaultPadding,
               vertical: appDefaultPadding / 2,
             ),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const CircleAvatar(),
-                const SizedBox(width: appDefaultPadding),
-                const Expanded(
+                CircleAvatar(),
+                SizedBox(width: appDefaultPadding),
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -76,28 +76,17 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       SizedBox(height: appDefaultPadding / 4),
                       Text(
-                        "102.50K followers",
-                        style: TextStyle(fontSize: 12),
+                        "Hello",
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(fontSize: 12, color: greyColor),
                       ),
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {},
-                  borderRadius: BorderRadius.circular(appDefaultBorderRadius),
-                  child: Container(
-                    height: 30,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: appDefaultPadding,
-                    ),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: greyColor.shade200),
-                      borderRadius:
-                          BorderRadius.circular(appDefaultBorderRadius),
-                    ),
-                    child: const Text('Follow'),
-                  ),
+                Text(
+                  '11:24 AM',
+                  style: TextStyle(fontSize: 12, color: greyColor),
                 ),
               ],
             ),

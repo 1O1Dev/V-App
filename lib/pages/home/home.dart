@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:v_app/configs/app_config.dart';
 import 'package:v_app/pages/page.dart';
 
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   TabController? _tabController;
+  final Widget postIcon = SvgPicture.asset('assets/icons/post.svg');
 
   @override
   void initState() {
@@ -27,7 +29,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           background: SafeArea(
             child: TabBar(
               controller: _tabController,
-              automaticIndicatorColorAdjustment: true,
               isScrollable: true,
               splashBorderRadius: BorderRadius.circular(
                 appDefaultBorderRadius * 2,
@@ -44,13 +45,26 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const PostPage(),
+              ),
+            ),
+            splashRadius: 18,
+            icon: postIcon,
+          ),
+        ],
       ),
       body: TabBarView(
         controller: _tabController,
+        physics: const BouncingScrollPhysics(),
         children: const [
           ExplorerPage(),
+          NearYouPage(),
           FollowingPage(),
-          NearYourPage(),
         ],
       ),
     );

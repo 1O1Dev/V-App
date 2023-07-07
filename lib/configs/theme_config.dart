@@ -10,6 +10,12 @@ class AppTheme {
       backgroundColor: whiteColor,
       centerTitle: false,
       elevation: 0.0,
+      toolbarHeight: 45,
+      titleTextStyle: TextStyle(
+        color: blackColor,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
       actionsIconTheme: IconThemeData(
         color: blackColor,
         size: 18,
@@ -18,7 +24,10 @@ class AppTheme {
     tabBarTheme: TabBarTheme(
       labelColor: whiteColor,
       unselectedLabelColor: greyColor,
+      unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
       labelStyle: const TextStyle(fontWeight: FontWeight.bold),
+      labelPadding:
+          const EdgeInsets.symmetric(horizontal: appDefaultPadding / 1.2),
       indicator: BoxDecoration(
         color: appColor,
         borderRadius: BorderRadius.circular(20),
@@ -31,6 +40,8 @@ class AppTheme {
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: whiteColor,
       elevation: 0,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       selectedIconTheme: IconThemeData(
         color: appColor,
         size: 30,

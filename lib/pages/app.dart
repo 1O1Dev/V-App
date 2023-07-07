@@ -22,7 +22,7 @@ class _AppPageState extends State<AppPage> {
 
   final Widget homeIcon = SvgPicture.asset('assets/icons/home.svg');
   final Widget searchIcon = SvgPicture.asset('assets/icons/search.svg');
-  final Widget postIcon = SvgPicture.asset('assets/icons/post.svg');
+  final Widget chatIcon = SvgPicture.asset('assets/icons/chat.svg');
   final Widget notificationIcon =
       SvgPicture.asset('assets/icons/notification.svg');
   final Widget profileIcon = SvgPicture.asset('assets/icons/profile.svg');
@@ -36,7 +36,7 @@ class _AppPageState extends State<AppPage> {
         children: const [
           HomePage(),
           SearchPage(),
-          PostPage(),
+          ChatPage(),
           NotificationPage(),
           MyProfilePage(),
         ],
@@ -52,7 +52,7 @@ class _AppPageState extends State<AppPage> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: postIcon,
+            icon: chatIcon,
             label: '',
           ),
           BottomNavigationBarItem(
