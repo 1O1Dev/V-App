@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 45,
+        automaticallyImplyLeading: false,
         flexibleSpace: FlexibleSpaceBar(
           background: SafeArea(
             child: TabBar(

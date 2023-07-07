@@ -25,7 +25,7 @@ class _NotificationPageState extends State<NotificationPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 45,
+        automaticallyImplyLeading: false,
         title: const Text('Notification'),
         actions: [
           TabBar(

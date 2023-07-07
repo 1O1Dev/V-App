@@ -14,8 +14,8 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("Search"),
-        toolbarHeight: 45,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: SizedBox(

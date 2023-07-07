@@ -23,7 +23,7 @@ class _MyProfilePageState extends State<MyProfilePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 45,
+        automaticallyImplyLeading: false,
         title: const Text('Profile'),
         actions: [
           IconButton(

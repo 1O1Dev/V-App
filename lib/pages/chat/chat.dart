@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:v_app/pages/page.dart';
 import '../../configs/config.dart';
 
 class ChatPage extends StatefulWidget {
@@ -14,8 +15,8 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text("Chat"),
-        toolbarHeight: 45,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),
           child: SizedBox(
@@ -54,7 +55,12 @@ class _ChatPageState extends State<ChatPage> {
         physics: const BouncingScrollPhysics(),
         itemCount: 20,
         itemBuilder: (context, index) => InkWell(
-          onTap: () {},
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MessagePage(),
+            ),
+          ),
           highlightColor: greyColor.shade100,
           child: Container(
             padding: const EdgeInsets.symmetric(

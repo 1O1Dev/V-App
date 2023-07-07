@@ -14,6 +14,7 @@ class _PostPageState extends State<PostPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           splashRadius: 18,
