@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:v_app/configs/app_config.dart';
+import 'package:v_app/pages/setting/setting.dart';
 import '../../components/component.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -27,7 +28,12 @@ class _MyProfilePageState extends State<MyProfilePage>
         title: const Text('Profile'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const SettingPage(),
+              ),
+            ),
             splashRadius: 18,
             icon: const Icon(Icons.settings),
           ),

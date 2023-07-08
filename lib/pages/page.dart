@@ -1,3 +1,4 @@
+export 'onboarding/onboarding.dart';
 export 'app.dart';
 export 'home/home.dart';
 export 'home/explorer.dart';

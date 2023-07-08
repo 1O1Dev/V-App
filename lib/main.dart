@@ -32,7 +32,7 @@ class VApp extends StatelessWidget {
     return MaterialApp(
       title: appName,
       theme: AppTheme.lightTheme,
-      home: const AppPage(),
+      home: const OnboardingPage(),
       debugShowCheckedModeBanner: false,
     );
   }
