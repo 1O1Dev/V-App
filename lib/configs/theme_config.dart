@@ -16,10 +16,7 @@ class AppTheme {
         fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
-      actionsIconTheme: IconThemeData(
-        color: blackColor,
-        size: 18,
-      ),
+      actionsIconTheme: IconThemeData(color: blackColor, size: 18),
     ),
     tabBarTheme: TabBarTheme(
       labelColor: whiteColor,
@@ -33,23 +30,14 @@ class AppTheme {
         borderRadius: BorderRadius.circular(20),
       ),
     ),
-    bottomAppBarTheme: const BottomAppBarTheme(
-      color: whiteColor,
-      elevation: 0,
-    ),
+    bottomAppBarTheme: const BottomAppBarTheme(color: whiteColor, elevation: 0),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: whiteColor,
       elevation: 0,
       showSelectedLabels: false,
       showUnselectedLabels: false,
-      selectedIconTheme: IconThemeData(
-        color: appColor,
-        size: 30,
-      ),
-      unselectedIconTheme: IconThemeData(
-        color: greyColor,
-        size: 30,
-      ),
+      selectedIconTheme: IconThemeData(color: appColor, size: 30),
+      unselectedIconTheme: IconThemeData(color: greyColor, size: 30),
       type: BottomNavigationBarType.fixed,
     ),
   );

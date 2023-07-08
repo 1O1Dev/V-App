@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../../configs/config.dart';
 
 class ImageCard extends StatelessWidget {
-  const ImageCard({
-    super.key,
-  });
+  const ImageCard({super.key});
 
   @override
   Widget build(BuildContext context) {

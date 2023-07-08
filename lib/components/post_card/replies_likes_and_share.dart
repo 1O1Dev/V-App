@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../../configs/config.dart';
 
 class RepliesAndLikes extends StatelessWidget {
-  const RepliesAndLikes({
-    super.key,
-  });
+  const RepliesAndLikes({super.key});
 
   @override
   Widget build(BuildContext context) {

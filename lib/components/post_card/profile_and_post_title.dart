@@ -3,9 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../configs/config.dart';
 
 class ProfileAndPostTitle extends StatelessWidget {
-  const ProfileAndPostTitle({
-    super.key,
-  });
+  const ProfileAndPostTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +119,7 @@ class ProfileAndPostTitle extends StatelessWidget {
       barrierColor: blackColor.withOpacity(0.4),
       backgroundColor: Colors.transparent,
       builder: (context) => Container(
-        height: 230,
+        height: 220,
         decoration: const BoxDecoration(
           color: whiteColor,
           borderRadius: BorderRadius.vertical(

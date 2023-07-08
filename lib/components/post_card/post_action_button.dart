@@ -4,9 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../configs/config.dart';
 
 class PostActionButton extends StatelessWidget {
-  const PostActionButton({
-    super.key,
-  });
+  const PostActionButton({super.key});
 
   @override
   Widget build(BuildContext context) {

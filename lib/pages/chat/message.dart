@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:v_app/configs/api_config.dart';
 import 'package:v_app/configs/app_config.dart';
+import 'package:v_app/models/message.dart';
+import 'package:v_app/providers/provider.dart';
+import 'package:v_app/services/message.dart';
 
-class MessagePage extends StatefulWidget {
+class MessagePage extends ConsumerStatefulWidget {
   const MessagePage({super.key});
 
   @override
-  State<MessagePage> createState() => _MessagePageState();
+  MessagePageState createState() => MessagePageState();
 }
 
-class _MessagePageState extends State<MessagePage> {
+class MessagePageState extends ConsumerState<MessagePage> {
+  final messageController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final messagePro = ref.watch(messageProvider);
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 45,
@@ -84,122 +92,133 @@ class _MessagePageState extends State<MessagePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: 20,
-              reverse: true,
-              padding: const EdgeInsets.symmetric(
-                horizontal: appDefaultPadding,
-                vertical: appDefaultPadding / 2,
-              ),
-              itemBuilder: (context, index) {
-                if (index == 2) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: appDefaultPadding / 2,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Row(
+            child: messagePro.map(
+              data: (data) {
+                List<Message> messagesList = data.value;
+                return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: messagesList.length,
+                  reverse: true,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: appDefaultPadding,
+                    vertical: appDefaultPadding / 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    final message = messagesList[index];
+                    // Receiver message
+                    if (message.receiver == receiverId) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: appDefaultPadding / 2,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            CircleAvatar(
-                              radius: 10,
-                              backgroundImage: NetworkImage(
-                                'https://i.pinimg.com/736x/b2/96/3b/b2963b8409faf5db6a20a5b2d1246125.jpg',
-                              ),
+                            const Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 10,
+                                  backgroundImage: NetworkImage(
+                                    'https://i.pinimg.com/736x/b2/96/3b/b2963b8409faf5db6a20a5b2d1246125.jpg',
+                                  ),
+                                ),
+                                SizedBox(width: appDefaultPadding / 2),
+                                Text(
+                                  '2h ago',
+                                  style: TextStyle(
+                                    color: greyColor,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(width: appDefaultPadding / 2),
-                            Text(
-                              '2h ago',
-                              style: TextStyle(
-                                color: greyColor,
-                                fontSize: 12,
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              width: MediaQuery.of(context).size.width / 1.5,
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                  vertical: appDefaultPadding / 2,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: appDefaultPadding,
+                                  vertical: appDefaultPadding / 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: greyColor.shade100,
+                                  borderRadius: BorderRadius.circular(
+                                    appDefaultBorderRadius,
+                                  ),
+                                ),
+                                child: Text(message.message),
                               ),
                             ),
                           ],
                         ),
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 1.5,
-                            margin: const EdgeInsets.symmetric(
-                              vertical: appDefaultPadding / 2,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: appDefaultPadding,
-                              vertical: appDefaultPadding / 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: greyColor.shade100,
-                              borderRadius: BorderRadius.circular(
-                                appDefaultBorderRadius,
-                              ),
-                            ),
-                            child: const Text(
-                              "I'm not really sure what at the 'm not really sure what at the 'm not really sure what at the",
-                              style: TextStyle(),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: appDefaultPadding / 2,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                      );
+                    }
+                    // Sender message
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: appDefaultPadding / 2,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(
-                            '2h ago',
-                            style: TextStyle(
-                              color: greyColor,
-                              fontSize: 12,
-                            ),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Text(
+                                '2h ago',
+                                style: TextStyle(
+                                  color: greyColor,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              SizedBox(width: appDefaultPadding / 2),
+                              CircleAvatar(
+                                radius: 10,
+                                backgroundImage: NetworkImage(
+                                  'https://i.pinimg.com/736x/2a/36/49/2a364917ff03ddc41e38285ed0326225.jpg',
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(width: appDefaultPadding / 2),
-                          CircleAvatar(
-                            radius: 10,
-                            backgroundImage: NetworkImage(
-                              'https://i.pinimg.com/736x/2a/36/49/2a364917ff03ddc41e38285ed0326225.jpg',
+                          Container(
+                            alignment: Alignment.centerRight,
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(
+                                vertical: appDefaultPadding / 2,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: appDefaultPadding,
+                                vertical: appDefaultPadding / 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: appColor,
+                                borderRadius: BorderRadius.circular(
+                                  appDefaultBorderRadius,
+                                ),
+                              ),
+                              child: Text(
+                                message.message,
+                                style: const TextStyle(color: whiteColor),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      Container(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 1.5,
-                          margin: const EdgeInsets.symmetric(
-                            vertical: appDefaultPadding / 2,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: appDefaultPadding,
-                            vertical: appDefaultPadding / 2,
-                          ),
-                          decoration: BoxDecoration(
-                            color: appColor,
-                            borderRadius: BorderRadius.circular(
-                              appDefaultBorderRadius,
-                            ),
-                          ),
-                          child: const Text(
-                            "I'm not really sure what at the 'm not really sure what",
-                            style: TextStyle(color: whiteColor),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
+              error: (error) => const Center(
+                child: Text("Failed to get message"),
+              ),
+              loading: (loading) => const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           ),
           SafeArea(
@@ -235,7 +254,11 @@ class _MessagePageState extends State<MessagePage> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (messageController.text.isNotEmpty) {
+                        MessageService().sendMessage(messageController.text);
+                      }
+                    },
                     splashRadius: 18,
                     icon: const Icon(
                       Icons.mic_rounded,
@@ -257,8 +280,9 @@ class _MessagePageState extends State<MessagePage> {
                         ),
                       ),
                       alignment: Alignment.center,
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: messageController,
+                        decoration: const InputDecoration(
                           isDense: true,
                           border: InputBorder.none,
                           hintText: 'Message',

@@ -16,92 +16,107 @@ class _SearchPageState extends State<SearchPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("Search"),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: SizedBox(
-            height: 40,
-            child: Container(
-              height: 40,
-              margin: const EdgeInsets.symmetric(
-                horizontal: appDefaultPadding,
-                vertical: appDefaultPadding / 4,
-              ),
-              decoration: BoxDecoration(
-                color: greyColor.shade100,
-                borderRadius: BorderRadius.circular(appDefaultBorderRadius),
-              ),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: appDefaultPadding / 2),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    'assets/icons/search.svg',
-                    color: greyColor,
-                  ),
-                  const SizedBox(width: appDefaultPadding / 2),
-                  const Text(
-                    "Search someone here",
-                    style: TextStyle(color: greyColor),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
       ),
-      body: ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: appDefaultPadding / 2),
-        physics: const BouncingScrollPhysics(),
-        itemCount: 20,
-        itemBuilder: (context, index) => InkWell(
-          onTap: () {},
-          highlightColor: greyColor.shade100,
-          child: Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: appDefaultPadding,
-              vertical: appDefaultPadding / 2,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const CircleAvatar(),
-                const SizedBox(width: appDefaultPadding),
-                const Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: RefreshIndicator(
+        onRefresh: () => Future.delayed(const Duration(seconds: 3)),
+        backgroundColor: whiteColor,
+        color: appColor,
+        child: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverAppBar(
+              floating: true,
+              automaticallyImplyLeading: false,
+              toolbarHeight: 40,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Container(
+                  height: 40,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: appDefaultPadding,
+                    vertical: appDefaultPadding / 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: greyColor.shade100,
+                    borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: appDefaultPadding / 2),
+                  child: Row(
                     children: [
-                      Text(
-                        "Someone",
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      SvgPicture.asset(
+                        'assets/icons/search.svg',
+                        color: greyColor,
                       ),
-                      SizedBox(height: appDefaultPadding / 4),
-                      Text(
-                        "102.50K followers",
-                        style: TextStyle(fontSize: 12),
+                      const SizedBox(width: appDefaultPadding / 2),
+                      const Text(
+                        "Search someone here",
+                        style: TextStyle(color: greyColor),
                       ),
                     ],
                   ),
                 ),
-                InkWell(
+              ),
+            ),
+            SliverPadding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: appDefaultPadding / 2),
+              sliver: SliverList.builder(
+                itemCount: 20,
+                itemBuilder: (context, index) => InkWell(
                   onTap: () {},
-                  borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+                  highlightColor: greyColor.shade100,
                   child: Container(
-                    height: 30,
                     padding: const EdgeInsets.symmetric(
                       horizontal: appDefaultPadding,
+                      vertical: appDefaultPadding / 2,
                     ),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: greyColor.shade200),
-                      borderRadius:
-                          BorderRadius.circular(appDefaultBorderRadius),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const CircleAvatar(),
+                        const SizedBox(width: appDefaultPadding),
+                        const Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Someone",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: appDefaultPadding / 4),
+                              Text(
+                                "102.50K followers",
+                                style:
+                                    TextStyle(fontSize: 12, color: greyColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {},
+                          borderRadius:
+                              BorderRadius.circular(appDefaultBorderRadius),
+                          child: Container(
+                            height: 30,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: appDefaultPadding,
+                            ),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(color: greyColor.shade200),
+                              borderRadius:
+                                  BorderRadius.circular(appDefaultBorderRadius),
+                            ),
+                            child: const Text('Follow'),
+                          ),
+                        ),
+                      ],
                     ),
-                    child: const Text('Follow'),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
