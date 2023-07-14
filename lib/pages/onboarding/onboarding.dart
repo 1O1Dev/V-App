@@ -195,9 +195,14 @@ class _OnboardingPageState extends State<OnboardingPage> {
                     ),
                     const SizedBox(width: appDefaultPadding / 2),
                     InkWell(
-                      onTap: () {},
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      ),
                       child: const Text(
-                        "Sign in",
+                        "Login",
                         style: TextStyle(
                           color: appColor,
                           fontWeight: FontWeight.bold,

@@ -83,7 +83,11 @@ class _ChatPageState extends State<ChatPage> {
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CircleAvatar(),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            'https://i.pinimg.com/736x/e6/cb/56/e6cb5675d3a47be9e5fef5919c8f2a69.jpg',
+                          ),
+                        ),
                         SizedBox(width: appDefaultPadding),
                         Expanded(
                           child: Column(

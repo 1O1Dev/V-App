@@ -36,16 +36,15 @@ class PostCard extends StatelessWidget {
               SizedBox(
                 height: 300,
                 child: ListView.builder(
-                  itemCount: 4,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.only(
-                    left: 60,
-                    right: appDefaultPadding / 2,
-                  ),
-                  itemBuilder: (context, index) => const ImageCard(),
-                ),
+                    itemCount: 4,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.only(
+                      left: 60,
+                      right: appDefaultPadding / 2,
+                    ),
+                    itemBuilder: (context, index) => const ImageCard()),
               ),
               const SizedBox(height: appDefaultPadding / 2),
               const PostActionButton(),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:v_app/pages/page.dart';
 import '../../configs/config.dart';
 
 class ImageCard extends StatelessWidget {
@@ -15,11 +16,19 @@ class ImageCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(appDefaultBorderRadius),
         border: Border.all(color: greyColor.shade200),
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(appDefaultBorderRadius),
-        child: Image.network(
-          'https://i.pinimg.com/564x/25/81/43/258143bbcb9ec277043fb92ff57eac7d.jpg',
-          fit: BoxFit.cover,
+      child: InkWell(
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ViewVideoPage(),
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+          child: Image.network(
+            'https://i.pinimg.com/564x/25/81/43/258143bbcb9ec277043fb92ff57eac7d.jpg',
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );

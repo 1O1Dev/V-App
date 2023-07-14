@@ -176,6 +176,7 @@ class _MyProfilePageState extends State<MyProfilePage>
             SliverAppBar(
               pinned: true,
               toolbarHeight: 35,
+              automaticallyImplyLeading: false,
               flexibleSpace: FlexibleSpaceBar(
                 background: TabBar(
                   controller: _tabController,

@@ -1,5 +1,7 @@
 export 'onboarding/onboarding.dart';
 export 'app.dart';
+export 'auth/login.dart';
+export 'auth/sigup.dart';
 export 'home/home.dart';
 export 'home/explorer.dart';
 export 'home/following.dart';
@@ -12,3 +14,5 @@ export 'like/like.dart';
 export 'profile/my_profile.dart';
 export 'profile/friend_profile.dart';
 export 'chat/message.dart';
+export 'view/image.dart';
+export 'view/video.dart';
