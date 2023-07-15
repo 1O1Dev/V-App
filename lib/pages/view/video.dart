@@ -14,6 +14,7 @@ class ViewVideoPage extends StatefulWidget {
 class _ViewVideoPageState extends State<ViewVideoPage> {
   int _currentIndex = 1;
   bool _visible = true;
+  bool _isPlaying = true;
   final PageController _pageController = PageController();
   VideoPlayerController? _videoController;
 
@@ -37,12 +38,9 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
     );
 
     _videoController!.addListener(() {
-      if (_videoController!.play() == true) {
-        print("Playing");
-      }
       setState(() {});
     });
-    _videoController!.setLooping(true);
+    _videoController!.setLooping(false);
     _videoController!.initialize().then((_) => setState(() {}));
     _videoController!.play();
   }
@@ -64,6 +62,21 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
         }
       }
     });
+  }
+
+  onTappedPlay() {
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
+    if (_isPlaying == true) {
+      setState(() {
+        _videoController!.play();
+      });
+    } else {
+      setState(() {
+        _videoController!.pause();
+      });
+    }
   }
 
   @override
@@ -154,6 +167,27 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                         ),
                       ],
                     ),
+                    Center(
+                      child: InkWell(
+                        onTap: onTappedPlay,
+                        borderRadius: BorderRadius.circular(
+                          appDefaultBorderRadius * 2,
+                        ),
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: whiteColor.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(
+                              appDefaultBorderRadius * 2,
+                            ),
+                          ),
+                          child: Icon(_isPlaying == true
+                              ? Icons.pause
+                              : Icons.play_arrow_rounded),
+                        ),
+                      ),
+                    ),
                     Column(
                       children: [
                         VideoProgressIndicator(
@@ -188,8 +222,8 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(
-                                        height: 20,
-                                        width: 20,
+                                        height: 18,
+                                        width: 18,
                                         child: SvgPicture.asset(
                                           'assets/icons/like.svg',
                                           color: whiteColor,
@@ -199,7 +233,10 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                           width: appDefaultPadding / 2),
                                       const Text(
                                         "20.12k",
-                                        style: TextStyle(color: whiteColor),
+                                        style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -218,8 +255,8 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(
-                                        height: 20,
-                                        width: 20,
+                                        height: 18,
+                                        width: 18,
                                         child: SvgPicture.asset(
                                           'assets/icons/comment.svg',
                                           color: whiteColor,
@@ -229,7 +266,10 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                           width: appDefaultPadding / 2),
                                       const Text(
                                         "1.51k",
-                                        style: TextStyle(color: whiteColor),
+                                        style: TextStyle(
+                                          color: whiteColor,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -249,8 +289,8 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                          height: 20,
-                                          width: 20,
+                                          height: 18,
+                                          width: 18,
                                           child: SvgPicture.asset(
                                             'assets/icons/repost.svg',
                                             color: whiteColor,
@@ -260,7 +300,10 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                             width: appDefaultPadding / 2),
                                         const Text(
                                           "2.23k",
-                                          style: TextStyle(color: whiteColor),
+                                          style: TextStyle(
+                                            color: whiteColor,
+                                            fontSize: 12,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -281,8 +324,8 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         SizedBox(
-                                          height: 20,
-                                          width: 20,
+                                          height: 18,
+                                          width: 18,
                                           child: SvgPicture.asset(
                                             'assets/icons/share.svg',
                                             color: whiteColor,
@@ -292,7 +335,10 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                                             width: appDefaultPadding / 2),
                                         const Text(
                                           "5.95",
-                                          style: TextStyle(color: whiteColor),
+                                          style: TextStyle(
+                                            color: whiteColor,
+                                            fontSize: 12,
+                                          ),
                                         ),
                                       ],
                                     ),

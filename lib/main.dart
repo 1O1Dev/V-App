@@ -17,11 +17,11 @@ class VApp extends StatelessWidget {
     if (Platform.isAndroid) {
       // This work only android
       SystemChrome.setSystemUIOverlayStyle(
-        SystemUiOverlayStyle(
+        const SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
           statusBarIconBrightness: Brightness.dark,
           systemNavigationBarIconBrightness: Brightness.dark,
-          systemNavigationBarColor: greyColor.shade100,
+          systemNavigationBarColor: whiteColor,
         ),
       );
     }
