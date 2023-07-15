@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:v_app/models/model.dart';
+import 'package:v_app/utils/util.dart';
 import '../../configs/config.dart';
 
 class ProfileAndPostTitle extends StatelessWidget {
-  const ProfileAndPostTitle({super.key});
+  const ProfileAndPostTitle({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+  final PostModel post;
 
   @override
   Widget build(BuildContext context) {
-    String contentText =
-        "although if a height or width is specified on the SvgPicture, a SizedBox will be used instead (which ensures better layout experience). There is currently no way to show an Error visually, however errors will get properly logged to the console in debug mode.";
     return SafeArea(
       child: Container(
         margin: const EdgeInsets.only(
@@ -78,9 +82,12 @@ class ProfileAndPostTitle extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            "40m",
-                            style: TextStyle(color: greyColor, fontSize: 12),
+                          Text(
+                            formateDate(post.post.createdAt),
+                            style: const TextStyle(
+                              color: greyColor,
+                              fontSize: 12,
+                            ),
                           ),
                           const SizedBox(width: appDefaultPadding),
                           InkWell(
@@ -102,7 +109,7 @@ class ProfileAndPostTitle extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: appDefaultPadding / 4),
-                  Text(contentText),
+                  Text(post.post.title),
                   const SizedBox(height: appDefaultPadding),
                 ],
               ),

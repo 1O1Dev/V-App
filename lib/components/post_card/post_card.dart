@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:v_app/models/model.dart';
 import '../../configs/config.dart';
 import '../component.dart';
 
 class PostCard extends StatelessWidget {
-  const PostCard({super.key});
+  const PostCard({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+  final PostModel post;
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +37,23 @@ class PostCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ProfileAndPostTitle(),
+              ProfileAndPostTitle(post: post),
               SizedBox(
                 height: 300,
                 child: ListView.builder(
-                    itemCount: 4,
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    physics: const BouncingScrollPhysics(),
-                    padding: const EdgeInsets.only(
-                      left: 60,
-                      right: appDefaultPadding / 2,
-                    ),
-                    itemBuilder: (context, index) => const ImageCard()),
+                  itemCount: post.post.files.length,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.only(
+                    left: 60,
+                    right: appDefaultPadding / 2,
+                  ),
+                  itemBuilder: (context, index) {
+                    final file = post.post.files[index];
+                    return ImageCard(file: file);
+                  },
+                ),
               ),
               const SizedBox(height: appDefaultPadding / 2),
               const PostActionButton(),

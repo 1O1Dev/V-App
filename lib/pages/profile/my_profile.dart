@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_app/configs/app_config.dart';
+import 'package:v_app/pages/page.dart';
 import 'package:v_app/pages/setting/setting.dart';
-import '../../components/component.dart';
 
 class MyProfilePage extends StatefulWidget {
   const MyProfilePage({super.key});
@@ -206,23 +206,11 @@ class _MyProfilePageState extends State<MyProfilePage>
           body: TabBarView(
             controller: _tabController,
             physics: const BouncingScrollPhysics(),
-            children: [
-              ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) => const PostCard(),
-              ),
-              ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) => const PostCard(),
-              ),
-              ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) => const PostCard(),
-              ),
-              ListView.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) => const PostCard(),
-              ),
+            children: const [
+              ExplorerPage(),
+              ExplorerPage(),
+              ExplorerPage(),
+              ExplorerPage(),
             ],
           ),
         ),

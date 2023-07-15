@@ -1,12 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:video_player/video_player.dart';
+
 import 'package:v_app/configs/app_config.dart';
 
 class ViewVideoPage extends StatefulWidget {
-  const ViewVideoPage({super.key});
-
+  final String videoUri;
+  const ViewVideoPage({
+    Key? key,
+    required this.videoUri,
+  }) : super(key: key);
   @override
   State<ViewVideoPage> createState() => _ViewVideoPageState();
 }
@@ -18,12 +23,6 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
   final PageController _pageController = PageController();
   VideoPlayerController? _videoController;
 
-  List<String> images = [
-    "https://v1.pinimg.com/videos/mc/expMp4/c1/7e/e2/c17ee2b8b9b42b13067f43c5d2b6dbe3_t1.mp4",
-    "https://v1.pinimg.com/videos/mc/720p/cc/62/df/cc62df8e1f1349725bbe38d11e5258be.mp4",
-    "https://v1.pinimg.com/videos/mc/expMp4/87/dc/2b/87dc2b86aace3d7fd6be90f572b37ee6_t1.mp4",
-  ];
-
   showDetail() {
     setState(() {
       _visible = !_visible;
@@ -31,11 +30,8 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
   }
 
   videoPlayer() {
-    _videoController = VideoPlayerController.networkUrl(
-      Uri.parse(
-        'https://v1.pinimg.com/videos/mc/expMp4/c1/7e/e2/c17ee2b8b9b42b13067f43c5d2b6dbe3_t1.mp4',
-      ),
-    );
+    _videoController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.videoUri));
 
     _videoController!.addListener(() {
       setState(() {});
@@ -106,17 +102,10 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
               _videoController!.dispose();
               Navigator.pop(context);
             },
-            child: PageView.builder(
-              physics: const BouncingScrollPhysics(),
-              itemCount: images.length,
-              controller: _pageController,
-              itemBuilder: (context, index) => InkWell(
-                onTap: () => showDetail(),
-                onLongPress: () => showMoreAction(context),
-                child: AspectRatio(
-                  aspectRatio: _videoController!.value.aspectRatio,
-                  child: VideoPlayer(_videoController!),
-                ),
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: _videoController!.value.aspectRatio,
+                child: VideoPlayer(_videoController!),
               ),
             ),
           ),
@@ -131,32 +120,8 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Row(
-                          children: [
-                            const SizedBox(width: appDefaultPadding),
-                            Container(
-                              height: 20,
-                              alignment: Alignment.center,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 6),
-                              decoration: BoxDecoration(
-                                color: whiteColor,
-                                borderRadius: BorderRadius.circular(
-                                  appDefaultBorderRadius,
-                                ),
-                              ),
-                              child: Text(
-                                "${images.length}/$_currentIndex",
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                         IconButton(
                           onPressed: () => showMoreAction(context),
                           splashRadius: 18,

@@ -1,28 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:v_app/configs/config.dart';
+import 'package:v_app/models/model.dart';
+import 'package:v_app/providers/post_provider.dart';
 import '../../components/component.dart';
 
-class ExplorerPage extends StatefulWidget {
+class ExplorerPage extends ConsumerStatefulWidget {
   const ExplorerPage({super.key});
 
   @override
-  State<ExplorerPage> createState() => _ExplorerPageState();
+  StateExplorerPage createState() => StateExplorerPage();
 }
 
-class _ExplorerPageState extends State<ExplorerPage>
+class StateExplorerPage extends ConsumerState
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    final postsData = ref.watch(postsProvider);
     return Scaffold(
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(const Duration(seconds: 3)),
+        onRefresh: () => Future.delayed(
+          const Duration(seconds: 3),
+          () => ref.refresh(postsProvider),
+        ),
         backgroundColor: whiteColor,
         color: appColor,
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          itemCount: 20,
-          itemBuilder: (context, index) => const PostCard(),
+        child: postsData.map(
+          data: (data) {
+            List<PostModel> posts = data.value;
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: posts.length,
+              itemBuilder: (context, index) => PostCard(post: posts[index]),
+            );
+          },
+          error: (error) => const Center(
+            child: Text("Failed to load post"),
+          ),
+          loading: (loading) => const Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
     );
