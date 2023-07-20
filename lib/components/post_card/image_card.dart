@@ -17,14 +17,33 @@ class ImageCard extends StatefulWidget {
 
 class _ImageCardState extends State<ImageCard> {
   VideoPlayerController? _videoController;
+  bool _isPlaying = false;
 
   videoPlayer() {
     if (widget.file.fileType == "video") {
       _videoController = VideoPlayerController.networkUrl(
         Uri.parse(widget.file.fileUri),
       );
+      _videoController!.addListener(() {
+        setState(() {});
+      });
       _videoController!.setLooping(false);
-      _videoController!.play();
+      _videoController!.initialize().then((_) => setState(() {}));
+      _videoController!.pause();
+    }
+  }
+
+  onTappedPlay() {
+    if (_isPlaying == false) {
+      setState(() {
+        _videoController!.play();
+        _isPlaying = true;
+      });
+    } else {
+      setState(() {
+        _videoController!.pause();
+        _isPlaying = false;
+      });
     }
   }
 
@@ -58,22 +77,50 @@ class _ImageCardState extends State<ImageCard> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              if (widget.file.fileType == "image") {
-                return const ViewImagePage();
+              if (widget.file.fileType == "video") {
+                return AspectRatio(
+                  aspectRatio: _videoController!.value.aspectRatio,
+                  child: ViewVideoPage(videoUri: widget.file.fileUri),
+                );
               } else {
-                return ViewVideoPage(videoUri: widget.file.fileUri);
+                return const ViewImagePage();
               }
             },
           ),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(appDefaultBorderRadius),
-          child: widget.file.fileType == 'image'
-              ? Image.network(
+          child: widget.file.fileType == 'video'
+              ? Stack(
+                  children: [
+                    VideoPlayer(_videoController!),
+                    Center(
+                      child: InkWell(
+                        onTap: onTappedPlay,
+                        borderRadius: BorderRadius.circular(
+                          appDefaultBorderRadius * 2,
+                        ),
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            color: whiteColor.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(
+                              appDefaultBorderRadius * 2,
+                            ),
+                          ),
+                          child: Icon(_isPlaying == true
+                              ? Icons.pause
+                              : Icons.play_arrow_rounded),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              : Image.network(
                   widget.file.fileUri,
                   fit: BoxFit.cover,
-                )
-              : VideoPlayer(_videoController!),
+                ),
         ),
       ),
     );

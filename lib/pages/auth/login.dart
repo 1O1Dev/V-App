@@ -112,15 +112,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(height: appDefaultPadding * 4),
-                    const Text(
-                      'V',
-                      style: TextStyle(
-                        fontSize: 80,
-                        fontWeight: FontWeight.bold,
-                        color: appColor,
-                      ),
-                    ),
                     const SizedBox(height: appDefaultPadding * 2),
                     Container(
                       height: 40,

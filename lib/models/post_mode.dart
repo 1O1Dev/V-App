@@ -54,16 +54,18 @@ class PostOneModel {
 class PostModel {
   final PostOneModel post;
   final CountModel count;
-
+  final List<CommentModel> comments;
   PostModel({
     required this.post,
     required this.count,
+    required this.comments,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'post': post.toMap(),
       'count': count.toMap(),
+      'comments': comments.map((x) => x.toMap()).toList(),
     };
   }
 
@@ -71,6 +73,11 @@ class PostModel {
     return PostModel(
       post: PostOneModel.fromMap(map['post'] as Map<String, dynamic>),
       count: CountModel.fromMap(map['count'] as Map<String, dynamic>),
+      comments: List<CommentModel>.from(
+        (map['comments'] as List<dynamic>).map<CommentModel>(
+          (x) => CommentModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
     );
   }
 

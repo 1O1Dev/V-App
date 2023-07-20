@@ -4,3 +4,4 @@ export 'setting.dart';
 export 'file_model.dart';
 export 'count_model.dart';
 export 'post_mode.dart';
+export 'comment_model.dart';

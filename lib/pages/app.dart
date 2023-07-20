@@ -20,12 +20,33 @@ class _AppPageState extends State<AppPage> {
     _pageViewController.jumpToPage(index);
   }
 
-  final Widget homeIcon = SvgPicture.asset('assets/icons/home.svg');
-  final Widget searchIcon = SvgPicture.asset('assets/icons/search.svg');
-  final Widget chatIcon = SvgPicture.asset('assets/icons/chat.svg');
+  final Widget homeIcon = SvgPicture.asset(
+    'assets/icons/home.svg',
+    height: 23,
+  );
+  final Widget homeActiveIcon = SvgPicture.asset(
+    'assets/icons/home-active.svg',
+    height: 23,
+  );
+  final Widget searchIcon = SvgPicture.asset(
+    'assets/icons/search.svg',
+    height: 24,
+  );
+  final Widget searchActiveIcon =
+      SvgPicture.asset('assets/icons/search-active.svg', height: 24);
+  final Widget chatIcon = SvgPicture.asset('assets/icons/chat.svg', height: 24);
+  final Widget chatActiveIcon =
+      SvgPicture.asset('assets/icons/chat-active.svg', height: 24);
   final Widget notificationIcon =
-      SvgPicture.asset('assets/icons/notification.svg');
-  final Widget profileIcon = SvgPicture.asset('assets/icons/profile.svg');
+      SvgPicture.asset('assets/icons/notification.svg', height: 24);
+  final Widget notificationActiveIcon =
+      SvgPicture.asset('assets/icons/notification-active.svg', height: 24);
+  final Widget profileIcon = SvgPicture.asset(
+    'assets/icons/profile.svg',
+    height: 24,
+  );
+  final Widget profileActiveIcon =
+      SvgPicture.asset('assets/icons/profile-active.svg', height: 24);
 
   @override
   Widget build(BuildContext context) {
@@ -46,22 +67,27 @@ class _AppPageState extends State<AppPage> {
           BottomNavigationBarItem(
             icon: homeIcon,
             label: '',
+            activeIcon: homeActiveIcon,
           ),
           BottomNavigationBarItem(
             icon: searchIcon,
             label: '',
+            activeIcon: searchActiveIcon,
           ),
           BottomNavigationBarItem(
             icon: chatIcon,
             label: '',
+            activeIcon: chatActiveIcon,
           ),
           BottomNavigationBarItem(
             icon: notificationIcon,
             label: '',
+            activeIcon: notificationActiveIcon,
           ),
           BottomNavigationBarItem(
             icon: profileIcon,
             label: '',
+            activeIcon: profileActiveIcon,
           ),
         ],
         currentIndex: _currentIndex,

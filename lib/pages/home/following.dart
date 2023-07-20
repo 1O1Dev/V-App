@@ -32,11 +32,13 @@ class StateFollowingPage extends ConsumerState
               itemBuilder: (context, index) => PostCard(post: posts[index]),
             );
           },
-          error: (error) => const Center(
-            child: Text("Failed to load post"),
+          error: (error) => PostErrorCard(
+            onTap: () => ref.refresh(postsProvider),
           ),
-          loading: (loading) => const Center(
-            child: CircularProgressIndicator(),
+          loading: (loading) => ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            itemCount: 50,
+            itemBuilder: (context, index) => const PostLoadingCard(),
           ),
         ),
       ),
