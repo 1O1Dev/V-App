@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:v_app/services/message.dart';
+import 'package:v_app/services/message_service.dart';
 
 final messageRepo = Provider((ref) => MessageService());
 

@@ -102,10 +102,14 @@ class _ViewVideoPageState extends State<ViewVideoPage> {
               _videoController!.dispose();
               Navigator.pop(context);
             },
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: _videoController!.value.aspectRatio,
-                child: VideoPlayer(_videoController!),
+            child: InkWell(
+              onTap: () => showDetail(),
+              onLongPress: () => showMoreAction(context),
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: _videoController!.value.aspectRatio,
+                  child: VideoPlayer(_videoController!),
+                ),
               ),
             ),
           ),

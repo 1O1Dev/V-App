@@ -18,7 +18,11 @@ class _SettingPageState extends State<SettingPage> {
         leading: IconButton(
           splashRadius: 18,
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_outlined, color: blackColor),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            color: blackColor,
+            size: 20,
+          ),
         ),
         title: const Text('Settings'),
       ),

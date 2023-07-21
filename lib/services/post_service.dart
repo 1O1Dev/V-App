@@ -11,15 +11,13 @@ class PostServices {
 
       List<PostModel> posts = [];
 
-      if (res.statusCode == 200) {
-        final postsData = jsonDecode(res.body)['posts'];
-        for (var post in postsData) {
-          posts.add(PostModel.fromMap(post));
-        }
-        return posts;
-      } else {
-        return [];
+      if (res.statusCode != 200) return [];
+
+      final postsData = jsonDecode(res.body)['posts'];
+      for (var post in postsData) {
+        posts.add(PostModel.fromMap(post));
       }
+      return posts;
     } catch (e) {
       throw Exception('Error to get posts : $e');
     }

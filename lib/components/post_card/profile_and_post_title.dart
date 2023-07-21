@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:v_app/models/model.dart';
+import 'package:v_app/pages/page.dart';
 import 'package:v_app/utils/util.dart';
 import '../../configs/config.dart';
 
@@ -28,9 +29,19 @@ class ProfileAndPostTitle extends StatelessWidget {
               width: 45,
               child: Stack(
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/564x/68/77/ef/6877ef663699d383f2e80b9bc355a220.jpg',
+                  InkWell(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            FriendProfilePage(userId: post.user.id),
+                      ),
+                    ),
+                    borderRadius: BorderRadius.circular(
+                      appDefaultBorderRadius * 2,
+                    ),
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(post.user.profileImage),
                     ),
                   ),
                   Positioned(
@@ -64,21 +75,30 @@ class ProfileAndPostTitle extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Row(
-                        children: [
-                          Text(
-                            "Chansy",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                      InkWell(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                FriendProfilePage(userId: post.user.id),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${post.user.name} ${post.user.lastName}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(width: appDefaultPadding / 2),
-                          Icon(
-                            Icons.verified,
-                            color: blueColor,
-                            size: 14,
-                          ),
-                        ],
+                            const SizedBox(width: appDefaultPadding / 2),
+                            const Icon(
+                              Icons.verified,
+                              color: blueColor,
+                              size: 14,
+                            ),
+                          ],
+                        ),
                       ),
                       Row(
                         children: [

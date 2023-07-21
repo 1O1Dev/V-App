@@ -57,7 +57,11 @@ class PostCard extends StatelessWidget {
               ),
               const SizedBox(height: appDefaultPadding / 2),
               const PostActionButton(),
-              RepliesAndLikes(count: post.count, comments: post.comments),
+              RepliesAndLikes(
+                threePeople: post.threePeople,
+                count: post.count,
+                postId: post.post.id,
+              ),
             ],
           ),
         ),

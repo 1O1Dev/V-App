@@ -1,53 +1,94 @@
 import 'dart:convert';
+import 'package:v_app/models/model.dart';
 
-class User {
+class UserModel {
   final String id;
   final String name;
   final String lastName;
-  final String nickName;
-  final String image;
+  final String profileImage;
   final String email;
   final String password;
-  final String address;
-  User({
+  final String createdAt;
+  final String updatedAt;
+  UserModel({
     required this.id,
     required this.name,
     required this.lastName,
-    required this.nickName,
-    required this.image,
+    required this.profileImage,
     required this.email,
     required this.password,
-    required this.address,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      '_id': id,
       'name': name,
       'lastName': lastName,
-      'nickName': nickName,
-      'image': image,
+      'profileImage': profileImage,
       'email': email,
       'password': password,
-      'address': address,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt,
     };
   }
 
-  factory User.fromMap(Map<String, dynamic> map) {
-    return User(
-      id: map['id'] as String,
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
+      id: map['_id'] as String,
       name: map['name'] as String,
       lastName: map['lastName'] as String,
-      nickName: map['nickName'] as String,
-      image: map['image'] as String,
+      profileImage: map['profileImage'] as String,
       email: map['email'] as String,
       password: map['password'] as String,
-      address: map['address'] as String,
+      createdAt: map['createdAt'] as String,
+      updatedAt: map['updatedAt'] as String,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) =>
-      User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class SearchUserModel {
+  final UserModel user;
+  final List<FollowModel> followers;
+  final List<FollowModel> followings;
+  SearchUserModel({
+    required this.user,
+    required this.followers,
+    required this.followings,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'user': user.toMap(),
+      'followers': followers.map((x) => x.toMap()).toList(),
+      'followings': followings.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory SearchUserModel.fromMap(Map<String, dynamic> map) {
+    return SearchUserModel(
+      user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
+      followers: List<FollowModel>.from(
+        (map['followers'] as List<dynamic>).map<FollowModel>(
+          (x) => FollowModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+      followings: List<FollowModel>.from(
+        (map['followings'] as List<dynamic>).map<FollowModel>(
+          (x) => FollowModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory SearchUserModel.fromJson(String source) =>
+      SearchUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

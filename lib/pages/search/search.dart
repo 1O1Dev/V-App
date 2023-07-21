@@ -1,17 +1,24 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:v_app/components/component.dart';
 import 'package:v_app/configs/config.dart';
+import 'package:v_app/models/model.dart';
+import 'package:v_app/pages/page.dart';
+import 'package:v_app/providers/provider.dart';
 
-class SearchPage extends StatefulWidget {
+class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  StateSearchPage createState() => StateSearchPage();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class StateSearchPage extends ConsumerState {
   @override
   Widget build(BuildContext context) {
+    final usersPro = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -60,63 +67,34 @@ class _SearchPageState extends State<SearchPage> {
             SliverPadding(
               padding:
                   const EdgeInsets.symmetric(vertical: appDefaultPadding / 2),
-              sliver: SliverList.builder(
-                itemCount: 20,
-                itemBuilder: (context, index) => InkWell(
-                  onTap: () {},
-                  highlightColor: greyColor.shade100,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: appDefaultPadding,
-                      vertical: appDefaultPadding / 2,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            'https://i.pinimg.com/736x/e6/cb/56/e6cb5675d3a47be9e5fef5919c8f2a69.jpg',
+              sliver: usersPro.map(
+                data: (data) {
+                  List<SearchUserModel> users = data.value;
+                  return SliverList.builder(
+                    itemCount: users.length,
+                    itemBuilder: (context, index) {
+                      final search = users[index];
+                      return SearchUserCard(
+                        user: search.user,
+                        follower: search.followers.length,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                FriendProfilePage(userId: search.user.id),
                           ),
                         ),
-                        const SizedBox(width: appDefaultPadding),
-                        const Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Someone",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: appDefaultPadding / 4),
-                              Text(
-                                "102.50K followers",
-                                style:
-                                    TextStyle(fontSize: 12, color: greyColor),
-                              ),
-                            ],
-                          ),
-                        ),
-                        InkWell(
-                          onTap: () {},
-                          borderRadius:
-                              BorderRadius.circular(appDefaultBorderRadius),
-                          child: Container(
-                            height: 30,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: appDefaultPadding,
-                            ),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: greyColor.shade200),
-                              borderRadius:
-                                  BorderRadius.circular(appDefaultBorderRadius),
-                            ),
-                            child: const Text('Follow'),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                      );
+                    },
+                  );
+                },
+                error: (error) => SliverToBoxAdapter(
+                  child: PostErrorCard(onTap: () => ref.refresh(userProvider)),
+                ),
+                loading: (loading) => SliverList.builder(
+                  itemCount: 50,
+                  itemBuilder: (context, index) =>
+                      const SearchUserLoadingCard(),
                 ),
               ),
             ),

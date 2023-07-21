@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:v_app/models/model.dart';
 
 class PostOneModel {
@@ -52,30 +50,34 @@ class PostOneModel {
 }
 
 class PostModel {
+  final UserModel user;
   final PostOneModel post;
   final CountModel count;
-  final List<CommentModel> comments;
+  final List<UserModel> threePeople;
   PostModel({
+    required this.user,
     required this.post,
     required this.count,
-    required this.comments,
+    required this.threePeople,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'user': user.toMap(),
       'post': post.toMap(),
       'count': count.toMap(),
-      'comments': comments.map((x) => x.toMap()).toList(),
+      'threePeople': threePeople.map((x) => x.toMap()).toList(),
     };
   }
 
   factory PostModel.fromMap(Map<String, dynamic> map) {
     return PostModel(
+      user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
       post: PostOneModel.fromMap(map['post'] as Map<String, dynamic>),
       count: CountModel.fromMap(map['count'] as Map<String, dynamic>),
-      comments: List<CommentModel>.from(
-        (map['comments'] as List<dynamic>).map<CommentModel>(
-          (x) => CommentModel.fromMap(x as Map<String, dynamic>),
+      threePeople: List<UserModel>.from(
+        (map['threePeople'] as List<dynamic>).map<UserModel>(
+          (x) => UserModel.fromMap(x as Map<String, dynamic>),
         ),
       ),
     );

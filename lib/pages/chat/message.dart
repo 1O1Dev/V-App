@@ -4,7 +4,7 @@ import 'package:v_app/configs/api_config.dart';
 import 'package:v_app/configs/app_config.dart';
 import 'package:v_app/models/message.dart';
 import 'package:v_app/providers/provider.dart';
-import 'package:v_app/services/message.dart';
+import 'package:v_app/services/message_service.dart';
 
 class MessagePage extends ConsumerStatefulWidget {
   const MessagePage({super.key});

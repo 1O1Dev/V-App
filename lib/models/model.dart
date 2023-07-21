@@ -5,3 +5,5 @@ export 'file_model.dart';
 export 'count_model.dart';
 export 'post_mode.dart';
 export 'comment_model.dart';
+export 'replies_comment_model.dart';
+export 'follow_model.dart';
