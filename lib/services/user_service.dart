@@ -21,4 +21,20 @@ class UserServices {
       throw Exception('Error getting users : $e');
     }
   }
+
+  Future<UserModelOne> getUserById(String userId) async {
+    try {
+      final uri = Uri.parse('$apiUri/users/$userId');
+      final res = await http.get(uri);
+
+      if (res.statusCode == 200) {
+        final user = jsonDecode(res.body);
+        return UserModelOne.fromMap(user);
+      } else {
+        throw Exception('Failed to get user. Status code: ${res.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Error getting user by id : $e');
+    }
+  }
 }

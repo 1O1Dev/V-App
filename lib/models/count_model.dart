@@ -6,12 +6,14 @@ class CountModel {
   final int commentsCount;
   final int sharesCount;
   final int tagsCount;
+  final int followingCount;
   CountModel({
     required this.likesCount,
     required this.repliesCount,
     required this.commentsCount,
     required this.sharesCount,
     required this.tagsCount,
+    required this.followingCount,
   });
 
   Map<String, dynamic> toMap() {
@@ -21,6 +23,7 @@ class CountModel {
       'commentsCount': commentsCount,
       'sharesCount': sharesCount,
       'tagsCount': tagsCount,
+      'followingCount': followingCount,
     };
   }
 
@@ -31,6 +34,7 @@ class CountModel {
       commentsCount: map['commentsCount'] as int,
       sharesCount: map['sharesCount'] as int,
       tagsCount: map['tagsCount'] as int,
+      followingCount: map['followingCount'] as int,
     );
   }
 

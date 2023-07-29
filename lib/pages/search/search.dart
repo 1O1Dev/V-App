@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,7 +17,7 @@ class SearchPage extends ConsumerStatefulWidget {
 class StateSearchPage extends ConsumerState {
   @override
   Widget build(BuildContext context) {
-    final usersPro = ref.watch(userProvider);
+    final usersPro = ref.watch(usersProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -89,7 +88,7 @@ class StateSearchPage extends ConsumerState {
                   );
                 },
                 error: (error) => SliverToBoxAdapter(
-                  child: PostErrorCard(onTap: () => ref.refresh(userProvider)),
+                  child: PostErrorCard(onTap: () => ref.refresh(usersProvider)),
                 ),
                 loading: (loading) => SliverList.builder(
                   itemCount: 50,

@@ -22,4 +22,19 @@ class PostServices {
       throw Exception('Error to get posts : $e');
     }
   }
+
+  Future<bool> createPost(CreatePostModel post) async {
+    try {
+      final uri = Uri.parse('$apiUri/posts/create');
+      final body = jsonEncode(post.toMap());
+      print('body: $body');
+      final res = await http.post(uri, body: body);
+      print('res: ${res.body}');
+
+      if (res.statusCode == 200) return true;
+      return false;
+    } catch (e) {
+      throw Exception('Error to get posts : $e');
+    }
+  }
 }

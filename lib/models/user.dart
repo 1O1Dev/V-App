@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:v_app/models/model.dart';
 
 class UserModel {
@@ -91,4 +93,32 @@ class SearchUserModel {
 
   factory SearchUserModel.fromJson(String source) =>
       SearchUserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class UserModelOne {
+  final UserModel user;
+  final CountModel count;
+  UserModelOne({
+    required this.user,
+    required this.count,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'user': user.toMap(),
+      'count': count.toMap(),
+    };
+  }
+
+  factory UserModelOne.fromMap(Map<String, dynamic> map) {
+    return UserModelOne(
+      user: UserModel.fromMap(map['user'] as Map<String, dynamic>),
+      count: CountModel.fromMap(map['count'] as Map<String, dynamic>),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModelOne.fromJson(String source) =>
+      UserModelOne.fromMap(json.decode(source) as Map<String, dynamic>);
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_app/configs/app_config.dart';
+import 'package:v_app/models/post_mode.dart';
+import 'package:v_app/services/service.dart';
 
 class PostPage extends StatefulWidget {
   const PostPage({super.key});
@@ -10,6 +12,96 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   final postTitle = TextEditingController();
+
+  void onPost() async {
+    final post = CreatePostModel(
+      userId: "64aa8109a76d0e3516fd3334",
+      title: postTitle.text,
+      files: [
+        CreateFileModel(
+          fileType: 'image',
+          fileUri:
+              'https://i.pinimg.com/736x/e5/7b/64/e57b64e4f82ca683bb71c7cb385940fa.jpg',
+        ),
+        CreateFileModel(
+          fileType: 'image',
+          fileUri:
+              'https://i.pinimg.com/736x/e5/7b/64/e57b64e4f82ca683bb71c7cb385940fa.jpg',
+        ),
+        CreateFileModel(
+          fileType: 'image',
+          fileUri:
+              'https://i.pinimg.com/736x/e5/7b/64/e57b64e4f82ca683bb71c7cb385940fa.jpg',
+        ),
+      ],
+    );
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 140,
+              width: 140,
+              decoration: BoxDecoration(
+                color: whiteColor,
+                borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    backgroundColor: appColor.shade100,
+                    color: appColor,
+                  ),
+                  const SizedBox(height: appDefaultPadding),
+                  const Text(
+                    "Posting",
+                    style: TextStyle(
+                      color: appColor,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+    bool isPost = await PostServices().createPost(post);
+    if (!isPost) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          content: Container(
+            padding: const EdgeInsets.all(appDefaultPadding),
+            decoration: BoxDecoration(
+              color: redColor,
+              borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+            ),
+            child: const Text(
+              "Can't post",
+              style: TextStyle(
+                fontSize: 18,
+                color: whiteColor,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      );
+      Navigator.pop(context);
+    }
+    if (isPost) Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +128,7 @@ class _PostPageState extends State<PostPage> {
               borderRadius: BorderRadius.circular(appDefaultBorderRadius),
             ),
             child: InkWell(
-              onTap: () {},
+              onTap: () => onPost(),
               borderRadius: BorderRadius.circular(appDefaultBorderRadius),
               child: Container(
                 padding:

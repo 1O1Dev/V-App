@@ -14,3 +14,5 @@ export 'post_card/replies_comment_card.dart';
 export 'paint/curve_left_bottom.dart';
 export 'search/search_user_card.dart';
 export 'search/search_user_loading_card.dart';
+export 'user/user_profile_card.dart';
+export 'user/user_profile_loading_card.dart';

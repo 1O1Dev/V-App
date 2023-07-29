@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
+
 import 'package:v_app/models/model.dart';
 
 class PostOneModel {
@@ -87,4 +89,68 @@ class PostModel {
 
   factory PostModel.fromJson(String source) =>
       PostModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class CreatePostModel {
+  final String userId;
+  final String title;
+  final List<CreateFileModel> files;
+  CreatePostModel({
+    required this.userId,
+    required this.title,
+    required this.files,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'userId': userId,
+      'title': title,
+      'files': files.map((x) => x.toMap()).toList(),
+    };
+  }
+
+  factory CreatePostModel.fromMap(Map<String, dynamic> map) {
+    return CreatePostModel(
+      userId: map['userId'] as String,
+      title: map['title'] as String,
+      files: List<CreateFileModel>.from(
+        (map['files'] as List<dynamic>).map<CreateFileModel>(
+          (x) => CreateFileModel.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CreatePostModel.fromJson(String source) =>
+      CreatePostModel.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class CreateFileModel {
+  final String fileType;
+  final String fileUri;
+  CreateFileModel({
+    required this.fileType,
+    required this.fileUri,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'fileType': fileType,
+      'fileUri': fileUri,
+    };
+  }
+
+  factory CreateFileModel.fromMap(Map<String, dynamic> map) {
+    return CreateFileModel(
+      fileType: map['fileType'] as String,
+      fileUri: map['fileUri'] as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory CreateFileModel.fromJson(String source) =>
+      CreateFileModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
