@@ -12,6 +12,7 @@ class PostPage extends StatefulWidget {
 
 class _PostPageState extends State<PostPage> {
   final postTitle = TextEditingController();
+  bool emptyTitle = false;
 
   void onPost() async {
     final post = CreatePostModel(
@@ -102,6 +103,27 @@ class _PostPageState extends State<PostPage> {
     if (isPost) Navigator.pop(context);
   }
 
+  void checkInput() {
+    postTitle.addListener(() {
+      if (postTitle.text.isNotEmpty) {
+        setState(() {
+          emptyTitle = true;
+        });
+      } else {
+        setState(() {
+          emptyTitle = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    checkInput();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,32 +139,41 @@ class _PostPageState extends State<PostPage> {
         ),
         title: const Text('New Post'),
         actions: [
-          Container(
-            height: 40,
-            margin: const EdgeInsets.symmetric(
-              vertical: appDefaultPadding / 2,
-              horizontal: appDefaultPadding,
-            ),
-            decoration: BoxDecoration(
-              color: appColor,
-              borderRadius: BorderRadius.circular(appDefaultBorderRadius),
-            ),
-            child: InkWell(
-              onTap: () => onPost(),
-              borderRadius: BorderRadius.circular(appDefaultBorderRadius),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: appDefaultPadding),
-                alignment: Alignment.center,
-                child: const Text(
-                  'Post',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+          emptyTitle == true
+              ? AnimatedOpacity(
+                  duration: const Duration(seconds: 1),
+                  opacity: 1,
+                  curve: Curves.bounceInOut,
+                  child: Container(
+                    height: 40,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: appDefaultPadding / 2,
+                      horizontal: appDefaultPadding,
+                    ),
+                    decoration: BoxDecoration(
+                      color: appColor,
+                      borderRadius:
+                          BorderRadius.circular(appDefaultBorderRadius),
+                    ),
+                    child: InkWell(
+                      onTap: () => onPost(),
+                      borderRadius:
+                          BorderRadius.circular(appDefaultBorderRadius),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: appDefaultPadding),
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Post',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-          ),
+                )
+              : Container(),
         ],
       ),
       body: SingleChildScrollView(
