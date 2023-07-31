@@ -139,41 +139,40 @@ class _PostPageState extends State<PostPage> {
         ),
         title: const Text('New Post'),
         actions: [
-          emptyTitle == true
-              ? AnimatedOpacity(
-                  duration: const Duration(seconds: 1),
-                  opacity: 1,
-                  curve: Curves.bounceInOut,
+          AnimatedOpacity(
+            duration: const Duration(seconds: 1),
+            opacity: 1,
+            curve: Curves.bounceInOut,
+            child: Visibility(
+              visible: emptyTitle,
+              child: Container(
+                height: 40,
+                margin: const EdgeInsets.symmetric(
+                  vertical: appDefaultPadding / 2,
+                  horizontal: appDefaultPadding,
+                ),
+                decoration: BoxDecoration(
+                  color: appColor,
+                  borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+                ),
+                child: InkWell(
+                  onTap: () => onPost(),
+                  borderRadius: BorderRadius.circular(appDefaultBorderRadius),
                   child: Container(
-                    height: 40,
-                    margin: const EdgeInsets.symmetric(
-                      vertical: appDefaultPadding / 2,
-                      horizontal: appDefaultPadding,
-                    ),
-                    decoration: BoxDecoration(
-                      color: appColor,
-                      borderRadius:
-                          BorderRadius.circular(appDefaultBorderRadius),
-                    ),
-                    child: InkWell(
-                      onTap: () => onPost(),
-                      borderRadius:
-                          BorderRadius.circular(appDefaultBorderRadius),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: appDefaultPadding),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'Post',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: appDefaultPadding),
+                    alignment: Alignment.center,
+                    child: const Text(
+                      'Post',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                )
-              : Container(),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(

@@ -13,3 +13,9 @@ final userProvider = FutureProvider.family<UserModelOne, String>((ref, userId) {
   final res = ref.read(userRep).getUserById(userId);
   return res;
 });
+
+final searchUserProvider = FutureProvider.autoDispose
+    .family<List<SearchUserModel>, String>((ref, name) {
+  final res = ref.read(userRep).searchUsers(name);
+  return res;
+});

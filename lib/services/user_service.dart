@@ -37,4 +37,26 @@ class UserServices {
       throw Exception('Error getting user by id : $e');
     }
   }
+
+  Future<List<SearchUserModel>> searchUsers(String name) async {
+    try {
+      print("Search is coming : $name");
+      final uri = Uri.parse('$apiUri/users-search-name');
+      final body = jsonEncode(name);
+      print("body : $body");
+      final res = await http.post(uri, body: body);
+      List<SearchUserModel> usersList = [];
+
+      if (res.statusCode != 200) return [];
+
+      final users = jsonDecode(res.body)['users'];
+      for (var user in users) {
+        usersList.add(SearchUserModel.fromMap(user));
+      }
+      print("usersList : $usersList");
+      return usersList;
+    } catch (e) {
+      throw Exception('Error getting search users : $e');
+    }
+  }
 }

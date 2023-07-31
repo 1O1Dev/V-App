@@ -6,6 +6,7 @@ import 'package:v_app/configs/config.dart';
 import 'package:v_app/models/model.dart';
 import 'package:v_app/pages/page.dart';
 import 'package:v_app/providers/provider.dart';
+import 'package:v_app/services/service.dart';
 
 class SearchPage extends ConsumerStatefulWidget {
   const SearchPage({super.key});
@@ -16,6 +17,9 @@ class SearchPage extends ConsumerStatefulWidget {
 
 class StateSearchPage extends ConsumerState {
   final search = TextEditingController();
+
+  List<SearchUserModel> users = [];
+
   @override
   Widget build(BuildContext context) {
     final usersPro = ref.watch(usersProvider);
@@ -47,7 +51,8 @@ class StateSearchPage extends ConsumerState {
                     borderRadius: BorderRadius.circular(appDefaultBorderRadius),
                   ),
                   padding: const EdgeInsets.symmetric(
-                      horizontal: appDefaultPadding / 2),
+                    horizontal: appDefaultPadding / 2,
+                  ),
                   child: Row(
                     children: [
                       SvgPicture.asset(
@@ -62,6 +67,13 @@ class StateSearchPage extends ConsumerState {
                       Expanded(
                         child: TextField(
                           controller: search,
+                          onChanged: (value) async {
+                            List<SearchUserModel> searchUsers =
+                                await UserServices().searchUsers(value);
+                            print("Search user: $searchUsers");
+                            print("Search user: $value");
+                            users.addAll(searchUsers);
+                          },
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             isDense: true,
@@ -79,7 +91,7 @@ class StateSearchPage extends ConsumerState {
                   const EdgeInsets.symmetric(vertical: appDefaultPadding / 2),
               sliver: usersPro.map(
                 data: (data) {
-                  List<SearchUserModel> users = data.value;
+                  users = data.value;
                   return SliverList.builder(
                     itemCount: users.length,
                     itemBuilder: (context, index) {

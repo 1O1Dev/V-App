@@ -88,6 +88,7 @@ class _ImageCardState extends State<ImageCard> {
             },
           ),
         ),
+        borderRadius: BorderRadius.circular(appDefaultBorderRadius),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(appDefaultBorderRadius),
           child: widget.file.fileType == 'video'
