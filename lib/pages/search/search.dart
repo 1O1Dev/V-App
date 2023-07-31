@@ -15,6 +15,7 @@ class SearchPage extends ConsumerStatefulWidget {
 }
 
 class StateSearchPage extends ConsumerState {
+  final search = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final usersPro = ref.watch(usersProvider);
@@ -54,9 +55,19 @@ class StateSearchPage extends ConsumerState {
                         color: greyColor,
                       ),
                       const SizedBox(width: appDefaultPadding / 2),
-                      const Text(
-                        "Search someone here",
-                        style: TextStyle(color: greyColor),
+                      // const Text(
+                      //   "Search someone here",
+                      //   style: TextStyle(color: greyColor),
+                      // ),
+                      Expanded(
+                        child: TextField(
+                          controller: search,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            isDense: true,
+                            hintText: 'Search someone here',
+                          ),
+                        ),
                       ),
                     ],
                   ),

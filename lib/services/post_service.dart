@@ -25,10 +25,14 @@ class PostServices {
 
   Future<bool> createPost(CreatePostModel post) async {
     try {
+      final postData = jsonEncode({
+        "userId": "Test post",
+        "title": "Hello post",
+      });
       final uri = Uri.parse('$apiUri/posts/create');
       final body = jsonEncode(post.toMap());
       print('body: $body');
-      final res = await http.post(uri, body: body);
+      final res = await http.post(uri, body: postData);
       print('res: ${res.body}');
 
       if (res.statusCode == 200) return true;
