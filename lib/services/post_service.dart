@@ -6,10 +6,9 @@ import '../configs/config.dart';
 class PostServices {
   Future<List<PostModel>> getPost() async {
     try {
+      List<PostModel> posts = [];
       final uri = Uri.parse('$apiUri/posts');
       final res = await http.get(uri);
-
-      List<PostModel> posts = [];
 
       if (res.statusCode != 200) return [];
 
@@ -28,8 +27,7 @@ class PostServices {
       var headersList = {'Accept': '*/*', 'Content-Type': 'application/json'};
       var postData = {
         "userId": "64b9fe35a22d03403a8f93de",
-        "title":
-            "Trave Web Site Design: Landing Page / Home Page UI designed by Farzan Faruk. Connect with them on Dribbble; the global community for designers and creative professionals.",
+        "title": post.title,
         "files": [
           {
             "fileType": "image",
@@ -55,13 +53,13 @@ class PostServices {
       };
       final uri = Uri.parse('$apiUri/posts/create');
       final body = jsonEncode(postData);
-      print('body === : $body');
       final res = await http.post(
         uri,
         body: body,
         headers: headersList,
-      ); // Use 'body' instead of 'postData'
-      print('res === : ${res.body}');
+      );
+
+      print(res.body);
 
       if (res.statusCode == 200) {
         return true;

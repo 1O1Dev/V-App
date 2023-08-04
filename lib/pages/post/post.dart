@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:v_app/configs/app_config.dart';
 import 'package:v_app/models/post_mode.dart';
+import 'package:v_app/pages/page.dart';
 import 'package:v_app/services/service.dart';
 
 class PostPage extends StatefulWidget {
@@ -100,7 +101,13 @@ class _PostPageState extends State<PostPage> {
       );
       Navigator.pop(context);
     }
-    if (isPost) Navigator.pop(context);
+    if (isPost)
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AppPage(),
+        ),
+      );
   }
 
   void checkInput() {

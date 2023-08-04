@@ -70,8 +70,6 @@ class StateSearchPage extends ConsumerState {
                           onChanged: (value) async {
                             List<SearchUserModel> searchUsers =
                                 await UserServices().searchUsers(value);
-                            print("Search user: $searchUsers");
-                            print("Search user: $value");
                             users.addAll(searchUsers);
                           },
                           decoration: const InputDecoration(
