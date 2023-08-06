@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:v_app/configs/app_config.dart';
 import 'package:v_app/pages/page.dart';
 import 'package:v_app/providers/provider.dart';
-
 import '../../components/component.dart';
+import '../../models/model.dart';
 
 class FriendProfilePage extends StatefulWidget {
   final String userId;
@@ -73,8 +73,9 @@ class _MyProfilePageState extends State<FriendProfilePage>
       ),
       body: Consumer(
         builder: (context, ref, child) {
-          final userId = widget.userId;
-          final userPro = ref.watch(userProvider(userId));
+          final friendId = widget.userId;
+          final userPro = ref.watch(userProvider(friendId));
+          final postsData = ref.watch(userPostsProvider(friendId));
           return RefreshIndicator(
             onRefresh: () => Future.delayed(const Duration(seconds: 3)),
             backgroundColor: whiteColor,
@@ -127,8 +128,40 @@ class _MyProfilePageState extends State<FriendProfilePage>
               body: TabBarView(
                 controller: _tabController,
                 physics: const BouncingScrollPhysics(),
-                children: const [
-                  ExplorerPage(),
+                children: [
+                  postsData.map(
+                    data: (data) {
+                      List<PostModel> posts = data.value;
+                      if (posts.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.data_exploration,
+                              size: 50,
+                              color: greyColor.shade400,
+                            ),
+                            const SizedBox(height: appDefaultPadding),
+                            const Text("You don't have any post"),
+                          ],
+                        );
+                      }
+                      return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: posts.length,
+                        itemBuilder: (context, index) =>
+                            PostCard(post: posts[index]),
+                      );
+                    },
+                    error: (error) => PostErrorCard(
+                      onTap: () => ref.refresh(postsProvider),
+                    ),
+                    loading: (loading) => ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: 50,
+                      itemBuilder: (context, index) => const PostLoadingCard(),
+                    ),
+                  ),
                   ExplorerPage(),
                   ExplorerPage(),
                   ExplorerPage(),

@@ -9,8 +9,9 @@ final usersProvider = FutureProvider((ref) {
   return res;
 });
 
-final userProvider = FutureProvider.family<UserModelOne, String>((ref, userId) {
-  final res = ref.read(userRep).getUserById(userId);
+final userProvider =
+    FutureProvider.family<UserModelOne, String>((ref, friendId) {
+  final res = ref.read(userRep).getUserById(friendId);
   return res;
 });
 

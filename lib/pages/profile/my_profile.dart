@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:v_app/configs/app_config.dart';
 import 'package:v_app/pages/page.dart';
 import 'package:v_app/pages/setting/setting.dart';
+import 'package:v_app/providers/provider.dart';
 
-class MyProfilePage extends StatefulWidget {
+import '../../components/component.dart';
+import '../../models/model.dart';
+
+class MyProfilePage extends ConsumerStatefulWidget {
   const MyProfilePage({super.key});
 
   @override
-  State<MyProfilePage> createState() => _MyProfilePageState();
+  StateMyProfilePage createState() => StateMyProfilePage();
 }
 
-class _MyProfilePageState extends State<MyProfilePage>
-    with TickerProviderStateMixin {
+class StateMyProfilePage extends ConsumerState with TickerProviderStateMixin {
   TabController? _tabController;
 
   @override
@@ -22,6 +26,8 @@ class _MyProfilePageState extends State<MyProfilePage>
 
   @override
   Widget build(BuildContext context) {
+    final userData = ref.watch(userProvider(userId));
+    final postsData = ref.watch(userPostsProvider(userId));
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -40,137 +46,146 @@ class _MyProfilePageState extends State<MyProfilePage>
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(const Duration(seconds: 3)),
+        onRefresh: () => Future.delayed(const Duration(seconds: 3), () {
+          ref.watch(userPostsProvider(userId));
+        }),
         backgroundColor: whiteColor,
         color: appColor,
         child: NestedScrollView(
           physics: const BouncingScrollPhysics(),
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            const SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(appDefaultPadding),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: NetworkImage(
-                            'https://i.pinimg.com/736x/e6/9d/9d/e69d9de044b99b6f641b24c41c393345.jpg',
-                          ),
-                        ),
-                        SizedBox(width: appDefaultPadding),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            SliverToBoxAdapter(
+              child: userData.map(
+                data: (data) {
+                  final user = data.value;
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(appDefaultPadding),
+                        child: Row(
                           children: [
-                            Text(
-                              "Chansy Thor",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage: NetworkImage(
+                                user.user.profileImage,
                               ),
                             ),
-                            Text(
-                              "@chansythor1999",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: greyColor,
-                              ),
-                            ),
-                            SizedBox(height: appDefaultPadding / 2),
-                            Text(
-                              "Vientaine Capital, Laos",
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(appDefaultPadding),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              "600",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: appDefaultPadding / 4),
-                            Text(
-                              "Following",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: greyColor,
-                              ),
-                            ),
+                            const SizedBox(width: appDefaultPadding),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "${user.user.name} ${user.user.lastName}",
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "@${user.user.name}${user.user.lastName}",
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: greyColor,
+                                  ),
+                                ),
+                                const SizedBox(height: appDefaultPadding / 2),
+                                const Text(
+                                  "Vientaine Capital, Laos",
+                                ),
+                              ],
+                            )
                           ],
                         ),
-                        Column(
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(appDefaultPadding),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              "1.2K",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
+                            Column(
+                              children: [
+                                Text(
+                                  "${user.count.followingCount}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: appDefaultPadding / 4),
+                                const Text(
+                                  "Following",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: greyColor,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: appDefaultPadding / 4),
-                            Text(
-                              "Replies",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: greyColor,
-                              ),
+                            Column(
+                              children: [
+                                Text(
+                                  "${user.count.repliesCount}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: appDefaultPadding / 4),
+                                const Text(
+                                  "Replies",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: greyColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "${user.count.likesCount}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: appDefaultPadding / 4),
+                                const Text(
+                                  "Like",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: greyColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "${user.count.sharesCount}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: appDefaultPadding / 4),
+                                const Text(
+                                  "Share",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: greyColor,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                        Column(
-                          children: [
-                            Text(
-                              "12.1K",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: appDefaultPadding / 4),
-                            Text(
-                              "Like",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            Text(
-                              "2.8K",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                              ),
-                            ),
-                            SizedBox(height: appDefaultPadding / 4),
-                            Text(
-                              "Share",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                      ),
+                    ],
+                  );
+                },
+                error: (error) => PostErrorCard(onTap: () {}),
+                loading: (loading) => const ProfileLoading(),
               ),
             ),
             SliverAppBar(
@@ -206,11 +221,43 @@ class _MyProfilePageState extends State<MyProfilePage>
           body: TabBarView(
             controller: _tabController,
             physics: const BouncingScrollPhysics(),
-            children: const [
-              ExplorerPage(),
-              ExplorerPage(),
-              ExplorerPage(),
-              ExplorerPage(),
+            children: [
+              postsData.map(
+                data: (data) {
+                  List<PostModel> posts = data.value;
+                  if (posts.isEmpty) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.data_exploration,
+                          size: 50,
+                          color: greyColor.shade400,
+                        ),
+                        const SizedBox(height: appDefaultPadding),
+                        const Text("You don't have any post"),
+                      ],
+                    );
+                  }
+                  return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: posts.length,
+                    itemBuilder: (context, index) =>
+                        PostCard(post: posts[index]),
+                  );
+                },
+                error: (error) => PostErrorCard(
+                  onTap: () => ref.refresh(postsProvider),
+                ),
+                loading: (loading) => ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: 50,
+                  itemBuilder: (context, index) => const PostLoadingCard(),
+                ),
+              ),
+              const ExplorerPage(),
+              const ExplorerPage(),
+              const ExplorerPage(),
             ],
           ),
         ),

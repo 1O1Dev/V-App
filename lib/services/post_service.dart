@@ -26,7 +26,7 @@ class PostServices {
     try {
       var headersList = {'Accept': '*/*', 'Content-Type': 'application/json'};
       var postData = {
-        "userId": "64b9fe35a22d03403a8f93de",
+        "userId": userId,
         "title": post.title,
         "files": [
           {
@@ -59,15 +59,28 @@ class PostServices {
         headers: headersList,
       );
 
-      print(res.body);
-
-      if (res.statusCode == 200) {
-        return true;
-      } else {
-        return false;
-      }
+      if (res.statusCode == 200) return true;
+      return false;
     } catch (e) {
       throw Exception('Error to create post : $e');
+    }
+  }
+
+  Future<List<PostModel>> getUserPosts(id) async {
+    try {
+      List<PostModel> posts = [];
+      final uri = Uri.parse('$apiUri/posts-user/$id');
+      final res = await http.get(uri);
+
+      if (res.statusCode != 200) return [];
+
+      final postsData = jsonDecode(res.body)['posts'];
+      for (var post in postsData) {
+        posts.add(PostModel.fromMap(post));
+      }
+      return posts;
+    } catch (e) {
+      throw Exception('Error to get posts : $e');
     }
   }
 }

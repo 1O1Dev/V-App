@@ -108,6 +108,27 @@ class _PostPageState extends State<PostPage> {
           builder: (context) => AppPage(),
         ),
       );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        content: Container(
+          padding: const EdgeInsets.all(appDefaultPadding),
+          decoration: BoxDecoration(
+            color: greenColor,
+            borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+          ),
+          child: const Text(
+            "You already posted",
+            style: TextStyle(
+              fontSize: 18,
+              color: whiteColor,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   void checkInput() {

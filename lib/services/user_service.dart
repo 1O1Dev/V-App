@@ -22,9 +22,9 @@ class UserServices {
     }
   }
 
-  Future<UserModelOne> getUserById(String userId) async {
+  Future<UserModelOne> getUserById(String friedId) async {
     try {
-      final uri = Uri.parse('$apiUri/users/$userId');
+      final uri = Uri.parse('$apiUri/users/$friedId');
       final res = await http.get(uri);
 
       if (res.statusCode == 200) {
