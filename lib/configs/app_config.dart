@@ -14,3 +14,5 @@ const redColor = Colors.red;
 
 const appDefaultPadding = 14.0;
 const appDefaultBorderRadius = 16.0;
+
+const userId = "64b9fe35a22d03403a8f93de";

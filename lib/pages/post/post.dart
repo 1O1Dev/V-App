@@ -15,7 +15,7 @@ class _PostPageState extends State<PostPage> {
   final postTitle = TextEditingController();
   bool emptyTitle = false;
 
-  void onPost() async {
+  void onCreatePost() async {
     final post = CreatePostModel(
       userId: "64aa8109a76d0e3516fd3334",
       title: postTitle.text,
@@ -163,7 +163,7 @@ class _PostPageState extends State<PostPage> {
                   borderRadius: BorderRadius.circular(appDefaultBorderRadius),
                 ),
                 child: InkWell(
-                  onTap: () => onPost(),
+                  onTap: () => onCreatePost(),
                   borderRadius: BorderRadius.circular(appDefaultBorderRadius),
                   child: Container(
                     padding: const EdgeInsets.symmetric(

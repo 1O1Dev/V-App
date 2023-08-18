@@ -59,8 +59,6 @@ class PostServices {
         headers: headersList,
       );
 
-      print(res.body);
-
       if (res.statusCode == 200) {
         return true;
       } else {
