@@ -59,8 +59,11 @@ class PostServices {
         headers: headersList,
       );
 
-      if (res.statusCode == 200) return true;
-      return false;
+      if (res.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       throw Exception('Error to create post : $e');
     }
