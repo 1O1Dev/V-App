@@ -7,3 +7,4 @@ export 'post_mode.dart';
 export 'comment_model.dart';
 export 'replies_comment_model.dart';
 export 'follow_model.dart';
+export 'token_model.dart';

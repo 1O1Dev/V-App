@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:v_app/configs/app_config.dart';
+import 'package:v_app/databases/database.dart';
 import 'package:v_app/pages/page.dart';
 import 'package:v_app/pages/setting/setting.dart';
 import 'package:v_app/providers/provider.dart';
@@ -24,8 +25,25 @@ class StateMyProfilePage extends ConsumerState with TickerProviderStateMixin {
     super.initState();
   }
 
+  Future<void> getUserData() async {
+    try {
+      final res = await UserDatabase().getUser();
+      if (res != null) {
+        print('User : $res');
+      } else {
+        print('User data is not available.');
+      }
+    } catch (e) {
+      print('Error getting user data from local storage: $e');
+      // Optionally, rethrow the exception if needed
+      // throw Exception('Error getting user data from local storage: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUserData();
+
     final userData = ref.watch(userProvider(userId));
     final postsData = ref.watch(userPostsProvider(userId));
     return Scaffold(

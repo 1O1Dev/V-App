@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:v_app/configs/app_config.dart';
 import 'package:v_app/pages/page.dart';
+import 'package:v_app/services/service.dart';
+import 'package:v_app/utils/util.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +13,74 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final email = TextEditingController();
+  final password = TextEditingController();
+
+  login() async {
+    if (email.text.isEmpty && password.text.isEmpty) {
+      final snackBar = showSnackBar('Required email and password', redColor);
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else if (email.text.isEmpty) {
+      final snackBar = showSnackBar('Required email', redColor);
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else if (password.text.isEmpty) {
+      final snackBar = showSnackBar('Required password', redColor);
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    } else if (!ValidateUtil.validationEmail(email.text)) {
+      final snackBar = showSnackBar('Email not validate formate', redColor);
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(
+        child: Container(
+          padding: const EdgeInsets.all(appDefaultPadding * 2),
+          decoration: BoxDecoration(
+            color: whiteColor,
+            borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+          ),
+          child: CircularProgressIndicator(
+            backgroundColor: appColor,
+            color: appColor.shade200,
+          ),
+        ),
+      ),
+    );
+    bool isLogin = await AuthServices().login(email.text, password.text);
+    if (!isLogin) {
+      Navigator.pop(context);
+      final snackBar = showSnackBar('Login failed', redColor);
+      return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const AppPage(),
+      ),
+    );
+  }
+
+  SnackBar showSnackBar(String title, Color color) {
+    return SnackBar(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      content: Container(
+        padding: const EdgeInsets.all(appDefaultPadding),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(appDefaultBorderRadius),
+        ),
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,8 +194,9 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: appDefaultPadding,
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: email,
+                        decoration: const InputDecoration(
                           hintText: 'Email address',
                           border: InputBorder.none,
                         ),
@@ -143,8 +214,9 @@ class _LoginPageState extends State<LoginPage> {
                       padding: const EdgeInsets.symmetric(
                         horizontal: appDefaultPadding,
                       ),
-                      child: const TextField(
-                        decoration: InputDecoration(
+                      child: TextField(
+                        controller: password,
+                        decoration: const InputDecoration(
                           hintText: 'Password',
                           border: InputBorder.none,
                         ),
@@ -152,12 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: appDefaultPadding * 2),
                     InkWell(
-                      onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AppPage(),
-                        ),
-                      ),
+                      onTap: () => login(),
                       borderRadius:
                           BorderRadius.circular(appDefaultBorderRadius),
                       child: Container(
